@@ -32,7 +32,8 @@ pipeline {
             steps{
                 echo 'Aguardar ok do supervisor'
                 timeout(time:3, unit:'DAYS') {
-                input 'Aprova esse deploy?'
+                    input 'Aprova esse deploy?'
+                }    
             }
         }
         stage('Package') {
