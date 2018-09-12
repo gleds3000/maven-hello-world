@@ -2,10 +2,10 @@
 
 pipeline {
     agent { label 'linux_01' }
-    tools { 
+    //tools { 
       //  maven 'Maven354 3.0.5' 
      //   jdk 'jdk8' 
-    } 
+    //} 
     stages {
         stage('Build') {
             steps {
