@@ -15,16 +15,23 @@ pipeline {
                     mvn --version
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
-                      def pom = readMavenPom file: 'pom.xml'
-                 "mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}"
-                 "mvn -B -Dmaven.test.skip=true clean package"
-                stash name: "artifact", includes: "target/maven-hello-*.war"
+                    def pom = readMavenPom file: 'pom.xml'
+                    mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
+                    mvn -B -Dmaven.test.skip=true clean package
+                    stash name: "artifact", includes: "target/maven-hello-*.war"
                 ''' 
             }
         }
         stage('Test') {
             steps {
                 echo 'testando..'
+            }
+        }
+        stage('Aprovar') {
+            steps{
+                echo 'Aguardar ok do supervisor'
+                timeout(time:3, unit:'DAYS') {
+                input 'Aprova esse deploy?'
             }
         }
         stage('Package') {
