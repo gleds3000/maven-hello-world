@@ -3,7 +3,7 @@
 pipeline {
     agent { label 'linux_01' }
     tools { 
-        maven 'Maven 3.3.9' 
+        maven354 'Maven 3.0.5' 
      //   jdk 'jdk8' 
     } 
     stages {
