@@ -3,7 +3,7 @@
 pipeline {
     agent { label 'linux_01' }
     tools { 
-        maven354 'Maven 3.0.5' 
+      //  maven 'Maven354 3.0.5' 
      //   jdk 'jdk8' 
     } 
     stages {
@@ -12,6 +12,7 @@ pipeline {
                 echo 'Construindo..'
                 script {'sh java -version'}
                  sh '''
+                    mvn --version
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                 ''' 
