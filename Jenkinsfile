@@ -12,9 +12,12 @@ pipeline {
                 echo 'Construindo..'
                 script {'sh java -version'}
                  sh '''
+                    pwd
+                    ls
                     mvn --version
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
+                    cd my-app
                     def pom = readMavenPom file: 'pom.xml'
                     print pom.version
                     mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
