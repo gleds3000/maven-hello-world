@@ -21,7 +21,7 @@ pipeline {
                     //echo pom.version
                     mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
-                    stash name: "artifact", includes: "target/maven-hello-*.war"
+                    stash name: "artifact", includes: "target/maven-hello-*.jar"
                 ''' 
             }
         }
