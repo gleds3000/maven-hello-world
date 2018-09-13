@@ -16,7 +16,7 @@ pipeline {
                     mvn -B -Dmaven.test.skip=true clean package
                    
                 ''' 
-                 stash name: "artifact", includes: "target/my-app*.jar"
+              //   stash name: "artifact", includes: "target/my-app*.jar"
             }
         }
         stage('Test') {
