@@ -11,18 +11,16 @@ pipeline {
             steps {
                 echo 'Construindo..'
                 //deleteDir()
-                script {'sh java -version'}
+               // script {'sh java -version'}
                  sh '''
-                    mvn --version
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                    pwd
-                    cd my-app
+                    //mvn --version
+                   // echo "PATH = ${PATH}"
+                   // echo "M2_HOME = ${M2_HOME}"
                     pwd
                     def pom = readMavenPom file: 'pom.xml'
                     mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
-                    stash name: "artifact", includes: "target/maven-hello-*.jar"
+                    stash name: "artifact", includes: "target/my-app.jar"
                 ''' 
             }
         }
