@@ -18,7 +18,7 @@ pipeline {
             }
             post {
                 success {
-                    stash name: 'artifact', includes: 'target/my-app*.jar'
+                    stash name: 'artifact', includes: 'my-app/target/my-app*.jar'
                 }
             }
             
