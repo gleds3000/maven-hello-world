@@ -26,6 +26,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testando..'
+                sh 'make check || true' 
+                junit '**/target/*.xml'
             }
         }
         stage('Aprovar') {
