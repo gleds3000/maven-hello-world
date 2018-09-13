@@ -19,6 +19,7 @@ pipeline {
                     pwd
                     cd my-app
                     pwd
+                    def pom = readMavenPom file: 'pom.xml'
                     mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
                     stash name: "artifact", includes: "target/maven-hello-*.jar"
