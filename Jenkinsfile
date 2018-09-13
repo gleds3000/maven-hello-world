@@ -13,12 +13,12 @@ pipeline {
                 //deleteDir()
                // script {'sh java -version'}
                  sh '''
-                    //mvn --version
+                    // mvn --version
                    // echo "PATH = ${PATH}"
                    // echo "M2_HOME = ${M2_HOME}"
                     pwd
-                    def pom = readMavenPom file: 'pom.xml'
-                    mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
+                   // def pom = readMavenPom file: 'pom.xml'
+                    mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
                     stash name: "artifact", includes: "target/my-app.jar"
                 ''' 
