@@ -14,10 +14,14 @@ pipeline {
                     cd my-app
                     mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
-                   
                 ''' 
-              //   stash name: "artifact", includes: "target/my-app*.jar"
             }
+            post {
+                success {
+                    stash name: 'artifact', includes: 'target/my-app*.jar'
+                }
+            }
+            
         }
         stage('Test') {
             steps {
