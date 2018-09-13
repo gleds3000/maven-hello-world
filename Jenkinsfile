@@ -26,7 +26,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testando..'
-                sh 'mvn test'
+                sh '''
+                    cd my-app
+                    mvn test
+                    '''
                // sh 'make check || true' 
                // junit '**/target/*.xml'
             }
