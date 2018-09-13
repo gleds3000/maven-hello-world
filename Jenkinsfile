@@ -10,6 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Construindo..'
+                deleteDir()
                 script {'sh java -version'}
                  sh '''
                     mvn --version
