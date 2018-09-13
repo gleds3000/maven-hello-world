@@ -17,8 +17,8 @@ pipeline {
                     echo "M2_HOME = ${M2_HOME}"
                     cd my-app
                     pwd
-                    def pom = readMavenPom file: 'pom.xml'
-                    echo pom.version
+                    //def pom = readMavenPom file: 'pom.xml'
+                    //echo pom.version
                     mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
                     stash name: "artifact", includes: "target/maven-hello-*.war"
