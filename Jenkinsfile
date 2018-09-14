@@ -37,16 +37,17 @@ pipeline {
         stage('Aprovar') {
             steps{
                 echo 'Aguardar ok do supervisor'
-                timeout(time:3, unit:'DAYS') {
-                    input 'Aprova esse deploy?'
-                }    
+                // timeout(time:3, unit:'DAYS') {
+                 //   input 'Aprova esse deploy?'
+                //}    
             }
         }
         stage('Sonar') {
             steps {
                 echo 'Analisando o codigo....'
-                cd my-app
+                
                 sh '''
+                    cd my-app
                     mvn sonar:sonar \
                     -Dsonar.host.url=http://192.168.56.111:9000 \
                     -Dsonar.login=780cf45127bd25aa23afb29e830036d32641f5ad
