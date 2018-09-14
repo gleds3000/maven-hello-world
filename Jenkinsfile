@@ -63,11 +63,11 @@ pipeline {
 
                     TIME="date +%d%m%Y_%H%M"
                     projectname = "my-app"
-                    cd /var/lib/jenkins/workspace/$projectname
+                    cd /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}
                     mkdir jarfiles
-                    find /var/lib/jenkins/workspace/$projectname -name "*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles \;
+                    find /var/lib/jenkins/workspace/${JOB_NAME}/${projectname} -name "*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles \;
                     cd jarfiles
-                    find /var/lib/jenkins/workspace/$projectname/jarfiles -name "*.jar" -exec basename {} .jar \; &gt;&gt; filenames
+                    find /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}/jarfiles -name "*.jar" -exec basename {} .jar \; &gt;&gt; filenames
                     file=filenames
                     #Nexus Detalhes
                     Nexus_Host="http://192.168.56.111"
