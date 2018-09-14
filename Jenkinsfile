@@ -64,33 +64,7 @@ pipeline {
                     cd /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}
                     mkdir jarfiles
                     echo ${TIME}
-                    find /var/lib/jenkins/workspace/${JOB_NAME}/${projectname} -name "*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles \;
-                    cd jarfiles
-                    find /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}/jarfiles -name "*.jar" -exec basename {} .jar \; &gt;&gt; filenames
-                    file=filenames
-                    #Nexus Detalhes
-                    Nexus_Host="http://192.168.56.111"
-                    Nexus_Port="8081"
-                    User="admin"
-                    Passwd="admin123"
-                    # URL do Repositorio
                     
-                    URL=":repository/csf-my-app/"
-                    groupid="com.mycompany.app"
-                    artifactid="my-app"
-                    #version="1.0.0-SNAPSHOT"
-                    timestamp="$TIME"
-                    echo
-                    echo " Carregar Artefatos para o Nexus"
-                    echo
-                    while IFS= read -r LINE; do
-                        curl -v -u $User:$Passwd --upload-file $LINE.zip http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.zip
-                    if [ $? -eq 0 ] ; then
-                        echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
-                        else
-                        echo "Instalando pacote Nexus" 1&gt;&amp;2 &gt;&gt; /tmp/jenkinslog
-                    fi
-                    done &lt; "$file"
                 '''
             }
         }
