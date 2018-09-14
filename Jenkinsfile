@@ -65,9 +65,9 @@ pipeline {
                     cd $projectname
                     mkdir jarfiles
                     echo $TIME
-                    find /var/lib/jenkins/workspace/${JOB_NAME}/${projectname} -name "*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles \;
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles \;
                     cd jarfiles
-                    find /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}/jarfiles -name "*.jar" -exec basename {} .jar \; &gt;&gt; filenames
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles -name "*.jar" -exec basename {} .jar \; &gt;&gt; filenames
                     file=filenames
                     #Nexus Detalhes
                     Nexus_Host="http://192.168.56.111"
