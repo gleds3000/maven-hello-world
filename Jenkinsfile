@@ -59,11 +59,12 @@ pipeline {
             steps {
                 echo 'Versionando e guardando....'
                 sh '''
-                    TIME=`data +%d%m%Y_%H%M`
+                    TIME=`date +%d%m%Y_%H%M`
                     projectname="my-app"
-                    cd /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}
+                    pwd
+                    # cd /var/lib/jenkins/workspace/${JOB_NAME}/${projectname}
                     mkdir jarfiles
-                    echo ${TIME}
+                    echo $TIME
                     
                 '''
             }
