@@ -65,9 +65,9 @@ pipeline {
                     cd $projectname
                     mkdir jarfiles
                     echo $TIME                    
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" | xargs cp -rf {} jarfiles/;
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles/;
                     cd jarfiles
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles -name "*my*.jar" | xargs basename {} .jar/; &gt;&gt; filenames
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles -name "*my*.jar" -exec basename {} .jar/; &gt;&gt; filenames
                     file=filenames
                     #Nexus Detalhes
                     Nexus_Host="http://192.168.56.111"
@@ -85,7 +85,7 @@ pipeline {
                     echo " Carregar Artefatos para o Nexus"
                     echo
                     while IFS= read -r LINE; do
-                        curl -v -u $User:$Passwd --upload-file $LINE.zip http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.zip
+                        curl -v -u $User:$Passwd --upload-file $LINE.jar http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.zip
                     if [ $? -eq 0 ] ; then
                         echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
                         else
