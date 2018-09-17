@@ -59,16 +59,21 @@ pipeline {
             steps {
                 echo 'Versionando e guardando....'
                 sh '''
-                    TIME=`date +%d%m%Y_%H%M`
+                    TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     pwd
+                    ls
                     cd $projectname
-                    if [ ! -d "$jarfiles" ]; then
+                    if [ ! -d jarfiles ] 
+                    then
                         mkdir jarfiles
+                        cd jarfiles
+                    else 
+                        cd jarfiles
                     fi
                     echo $TIME                    
                     find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles/;
-                    cd jarfiles
+                    # cd jarfiles
                     find /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles -name "*my*.jar" -exec basename {} .jar/; &gt;&gt; filenames
                     file=filenames
                     #Nexus Detalhes
@@ -82,17 +87,17 @@ pipeline {
                     groupid="com.mycompany.app"
                     artifactid="my-app"
                     #version="1.0.0-SNAPSHOT"
-                    timestamp="$TIME"
+                    timestamp=$TIME
                     echo
                     echo " Carregar Artefatos para o Nexus"
                     echo
                     while IFS= read -r LINE; do
                         curl -v -u $User:$Passwd --upload-file $LINE.jar http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.jar
-                    # if [ $? -eq 0 ] ; then
-                    #    echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
-                    #    else
-                    #    echo "Instalando pacote Nexus" 1&gt;&amp;2 &gt;&gt; /tmp/jenkinslog
-                    # fi
+                    if [ $? -eq 0 ] ; then
+                        echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
+                        else
+                        echo "Instalando pacote Nexus" 1&gt;&amp;2 &gt;&gt; /tmp/jenkinslog
+                    fi
                     done &lt; "$file"
                     
                 '''
