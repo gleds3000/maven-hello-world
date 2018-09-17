@@ -63,7 +63,9 @@ pipeline {
                     projectname="my-app"
                     pwd
                     cd $projectname
-                    mkdir jarfiles
+                    if [ ! -d "$jarfiles" ]; then
+                        mkdir jarfiles
+                    fi
                     echo $TIME                    
                     find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles/;
                     cd jarfiles
@@ -85,12 +87,12 @@ pipeline {
                     echo " Carregar Artefatos para o Nexus"
                     echo
                     while IFS= read -r LINE; do
-                        curl -v -u $User:$Passwd --upload-file $LINE.jar http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.zip
-                    if [ $? -eq 0 ] ; then
-                        echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
-                        else
-                        echo "Instalando pacote Nexus" 1&gt;&amp;2 &gt;&gt; /tmp/jenkinslog
-                    fi
+                        curl -v -u $User:$Passwd --upload-file $LINE.jar http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.jar
+                    # if [ $? -eq 0 ] ; then
+                    #    echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
+                    #    else
+                    #    echo "Instalando pacote Nexus" 1&gt;&amp;2 &gt;&gt; /tmp/jenkinslog
+                    # fi
                     done &lt; "$file"
                     
                 '''
