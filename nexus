@@ -21,7 +21,7 @@ pipeline {
                         cd jarfiles
                     fi
                     echo $TIME                    
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles/;
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp -rf {} /jarfiles \;
                     # cd jarfiles
                     # find /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles -name "*my*.jar" -exec basename {} .jar ; &gt;&gt; filenames
                     ls 
