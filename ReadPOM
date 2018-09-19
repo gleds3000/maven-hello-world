@@ -29,7 +29,7 @@ pipeline {
             script {
               def pom = readMavenPom file: 'my-app/pom.xml'
               def versao = pom.version
-                echo ${versao}
+                print versao
             }
           }
         }
