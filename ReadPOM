@@ -26,8 +26,9 @@ pipeline {
         stage('ler POM'){
           steps{
           echo 'lendo o pom'
-            script { 
-              pom = readMavenPom file: '${JOB_NAME}/$projectname/pom.xml'
+            script {
+              projectname="my-app"
+              pom = readMavenPom file: '$projectname/pom.xml'
               def versao = pom.version
               echo $versao
             }
@@ -40,7 +41,7 @@ pipeline {
                     #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     ###leitura do POM ####
-                    #pom = readMavenPom file: '${JOB_NAME}/$projectname/pom.xml'
+                    #pom = readMavenPom file: '$projectname/pom.xml'
                     #def versao = pom.version
                     #echo $versao
                     
