@@ -61,6 +61,12 @@ pipeline {
                 sh '''
                     TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
+                    ###leitura do POM ####
+                    pom = readMavenPom file: '${env.WORKSPACE}/${JOB_NAME}/$projectname/pom.xml'
+                    def versao = pom.version
+                    
+                    echo $versao
+                    #### fim da leitura do pom ####
                     pwd
                     ls
                     cd $projectname
@@ -71,36 +77,25 @@ pipeline {
                     else 
                         cd jarfiles
                     fi
-                    echo $TIME                    
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp -rf {} jarfiles/;
-                    # cd jarfiles
-                    # find /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles -name "*my*.jar" -exec basename {} .jar ; &gt;&gt; filenames
-                    ls 
-                    file=filenames
-                    #Nexus Detalhes
-                    Nexus_Host="http://192.168.56.111"
-                    Nexus_Port="8081"
-                    User="admin"
-                    Passwd="admin123"
-                    # URL do Repositorio
+                    echo $TIME     
+                    #### separa os pacotes na jarfiles ##
+                    # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
+                    find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \;
                     
-                    URL=":repository/csf-my-app/"
-                    groupid="com.mycompany.app"
-                    artifactid="my-app"
-                    #version="1.0.0-SNAPSHOT"
-                    timestamp=$TIME
-                    echo
-                    echo " Carregar Artefatos para o Nexus"
-                    echo
-                    while IFS= read -r LINE; do
-                        curl -v -u $User:$Passwd --upload-file $LINE.jar http://$Nexus_Host:$Nexus_Port$URL/$timestamp/$groupid/$artifactid/$LINE-$BUILD_NUMBER.jar
-                    if [ $? -eq 0 ] ; then
-                        echo "Instalando Artefatos - Sucesso " &gt;&gt; /tmp/jenkinslog
-                        else
-                        echo "Instalando pacote Nexus" 1&gt;&amp;2 &gt;&gt; /tmp/jenkinslog
-                    fi
-                    done &lt; "$file"
+                   
+                    #######  Upload no Nexus 
+                     nexusArtifactUploader artifacts: [
+                    [artifactId: 'my-app', classifier: '', file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar', type: 'jar']
+                    ], 
+                    credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
+                    groupId: 'com.mycompany.app', 
+                    nexusUrl: '192.168.56.111:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'piloto/', 
+                    version: '0.0.3'
                     
+                    ######  fim do upload
                 '''
             }
         }
