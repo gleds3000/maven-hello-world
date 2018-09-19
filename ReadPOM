@@ -28,9 +28,9 @@ pipeline {
           echo 'lendo o pom'
             script {
               def pom = readMavenPom file: 'my-app/pom.xml'
-              def version     = pom.version
-              def artifactId  = pom.artifactId
-              def groupId     = pom.groupId
+              def version=pom.version
+              def artifactId=pom.artifactId
+              def groupId=pom.groupId
               print version
               print groupid
               print artifactId  
@@ -43,13 +43,7 @@ pipeline {
                 sh '''
                     #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
-                    ###leitura do POM ####
-                    # cd $projectname 
-                    #pom = readMavenPom file: 'pom.xml'
-                    #def versao = pom.version
-                    #echo $versao
-                    
-                    #### fim da leitura do pom ####
+                  
                     pwd
                     ls
                     cd $projectname
@@ -79,7 +73,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'piloto/', 
-                    version: '''${BUILD_NUMBER}'''
+                  //  version: '''${BUILD_NUMBER}'''
                     
                     //  fim do upload
                 
