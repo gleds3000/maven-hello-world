@@ -77,15 +77,15 @@ pipeline {
                     else 
                         cd jarfiles
                     fi
-                    println date
+                    echo date
                     
                     #### separa os pacotes na jarfiles ##
                     # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
                     find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
                     
-                    date
+                    echo date
                     
-                    println "Inicio da subida para o nexus"
+                    echo "Inicio da subida para o nexus"
                     #######  Upload no Nexus 
                      nexusArtifactUploader artifacts: [
                     [artifactId: 'my-app', classifier: '', file: '/jarfiles/my-app-61.jar', type: 'jar']
