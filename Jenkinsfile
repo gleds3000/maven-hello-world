@@ -98,7 +98,7 @@ pipeline {
                     repository: 'piloto/', 
                     version: '0.0.3'
                     
-                    ######  fim do upload
+                    //  fim do upload
                 
             }
         }
