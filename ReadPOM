@@ -28,6 +28,7 @@ pipeline {
           echo 'lendo o pom'
             script {
               projectname="my-app"
+              cd my-app
               pom = readMavenPom file: '$projectname/pom.xml'
               def versao = pom.version
               echo $versao
@@ -41,7 +42,8 @@ pipeline {
                     #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     ###leitura do POM ####
-                    #pom = readMavenPom file: '$projectname/pom.xml'
+                    # cd $projectname 
+                    #pom = readMavenPom file: 'pom.xml'
                     #def versao = pom.version
                     #echo $versao
                     
