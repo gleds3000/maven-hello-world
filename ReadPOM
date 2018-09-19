@@ -28,8 +28,8 @@ pipeline {
           echo 'lendo o pom'
             script {
               projectname="my-app"
-              cd my-app
-              pom = readMavenPom file: '$projectname/pom.xml'
+              
+              pom = readMavenPom file: 'pom.xml'
               def versao = pom.version
               echo $versao
             }
