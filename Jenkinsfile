@@ -59,7 +59,7 @@ pipeline {
             steps {
                 echo 'Versionando e guardando....'
                 sh '''
-                    TIME=date  #`date +%d%m%Y_%H%M`
+                    #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     ###leitura do POM ####
                     #pom = readMavenPom file: '${JOB_NAME}/$projectname/pom.xml'
@@ -77,15 +77,18 @@ pipeline {
                     else 
                         cd jarfiles
                     fi
-                    echo $TIME     
+                    println date
+                    
                     #### separa os pacotes na jarfiles ##
                     # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
                     find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
                     
-                   
+                    date
+                    
+                    println "Inicio da subida para o nexus"
                     #######  Upload no Nexus 
                      nexusArtifactUploader artifacts: [
-                    [artifactId: 'my-app', classifier: '', file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar', type: 'jar']
+                    [artifactId: 'my-app', classifier: '', file: '/jarfiles/my-app-61.jar', type: 'jar']
                     ], 
                     credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
                     groupId: 'com.mycompany.app', 
