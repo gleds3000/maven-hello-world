@@ -84,10 +84,10 @@ pipeline {
                     find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
                     
                     echo date
-                    
+                    '''
                     echo "Inicio da subida para o nexus"
-                    #######  Upload no Nexus 
-                     nexusArtifactUploader artifacts: [
+                    //  Upload no Nexus 
+                    nexusArtifactUploader artifacts: [
                     [artifactId: 'my-app', classifier: '', file: '/jarfiles/my-app-61.jar', type: 'jar']
                     ], 
                     credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
@@ -99,7 +99,7 @@ pipeline {
                     version: '0.0.3'
                     
                     ######  fim do upload
-                '''
+                
             }
         }
         stage('Deploy') {
