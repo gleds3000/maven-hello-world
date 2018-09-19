@@ -21,8 +21,8 @@ pipeline {
                     stash name: 'artifact', includes: 'my-app/target/my-app*.jar'
                 }
             }
-            
-        }
+        }     
+        
         stage('ler POM'){
           steps{
           echo 'lendo o pom'
@@ -57,8 +57,8 @@ pipeline {
                     echo date
                     
                     #### separa os pacotes na jarfiles ##
-                    # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
-                    find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
+                   
+     find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {}/var/jenkins/workspace/CSF/jarfiles/ \\;
                     
                     echo date
                     '''
@@ -73,10 +73,10 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'piloto/', 
-                  //  version: '''${BUILD_NUMBER}'''
+                    version: '''${BUILD_NUMBER}'''
                     
                     //  fim do upload
-                
+                }
             }
         }
         stage('Deploy') {
