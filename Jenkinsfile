@@ -62,10 +62,10 @@ pipeline {
                     TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     ###leitura do POM ####
-                    pom = readMavenPom file: '${env.WORKSPACE}/${JOB_NAME}/$projectname/pom.xml'
-                    def versao = pom.version
+                    #pom = readMavenPom file: '${JOB_NAME}/$projectname/pom.xml'
+                    #def versao = pom.version
+                    #echo $versao
                     
-                    echo $versao
                     #### fim da leitura do pom ####
                     pwd
                     ls
