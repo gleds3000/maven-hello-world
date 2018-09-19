@@ -27,9 +27,7 @@ pipeline {
           steps{
           echo 'lendo o pom'
             script {
-              projectname="my-app"
-              'sh cd $projectname'
-              pom = readMavenPom file: 'pom.xml'
+              def pom = readMavenPom file: 'my-app/pom.xml'
               def versao = pom.version
               echo $versao
             }
