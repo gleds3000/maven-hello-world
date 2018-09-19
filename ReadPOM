@@ -77,7 +77,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'piloto/', 
-                    version: '0.0.3'
+                    version: '''${BUILD_NUMBER}'''
                     
                     //  fim do upload
                 
