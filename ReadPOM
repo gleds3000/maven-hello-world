@@ -14,7 +14,7 @@ pipeline {
                  sh '''
                     ls
                     cd my-app
-                    mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
+                    #mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
                 ''' 
             }
