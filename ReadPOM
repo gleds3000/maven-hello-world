@@ -36,12 +36,13 @@ pipeline {
                 print ver
               // print groupid
               print artifactId
-                pomFile = readFile(pomName)
- def pom = new XmlParser().parseText(pomFile)
+                pomFile = readFile('my-app/pom.xml')
+                
+ def pomv = new XmlParser().parseText(pomFile)
  def gavMap = [:]
- gavMap['groupId'] =  pom['groupId'].text().trim()
- gavMap['artifactId'] =  pom['artifactId'].text().trim()
- gavMap['version'] =  pom['version'].text().trim()
+ gavMap['groupId'] =  pomv['groupId'].text().trim()
+ gavMap['artifactId'] =  pomv['artifactId'].text().trim()
+ gavMap['version'] =  pomv['version'].text().trim()
                 
                 
             }
