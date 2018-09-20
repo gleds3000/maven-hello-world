@@ -78,8 +78,8 @@ pipeline {
                         credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
                         artifacts:[
                             [artifactId: pom.artifactId,
-                             classifier: 'Debug',
-                             file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar',
+                             classifier: 'Release',
+                             file: '/var/jenkins/workspace/+"${JOB_NAME}"+/jarfiles/'pom.name' + '-' + pom.version.jar',
                              type: 'jar']
                     ] 
                     //  fim do upload
