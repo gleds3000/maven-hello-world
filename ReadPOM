@@ -29,6 +29,7 @@ pipeline {
              
             steps{
               echo 'lendo o pom'
+                script{
                     def pom = readMavenPom file: 'my-app/pom.xml'
                     def ver=pom.version
                     def artifactId=pom.artifactId
@@ -38,6 +39,7 @@ pipeline {
                     print ver
                       // print groupid
                     print artifactId
+                }
           }
         }
      
