@@ -75,11 +75,11 @@ pipeline {
                         protocol: 'http', 
                         nexusUrl: '192.168.56.111:8081', 
                         groupId: 'com.mycompany.app', 
-                        **version:"${pom.version}",** 
+                        version:"${pom.version}", 
                         repository: 'piloto', 
                         credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
                         artifacts: [
-                            [artifactId: pom.version,
+                            [artifactId: pom.artifactId,
                              file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar',
                              type: 'jar']
                     ] 
