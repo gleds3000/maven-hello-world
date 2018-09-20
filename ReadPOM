@@ -53,8 +53,8 @@ pipeline {
                     #### separa os pacotes na jarfiles ##
                     # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
                     #find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/jarfiles/ \\;
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/jarfiles/ \\;
-                     mv *shaded* + '-'+ ${BUILD_NUMBER}.jar $projectname + '-' + ${BUILD_NUMBER} + '.jar' 
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
+                     mv *shaded*'-'${BUILD_NUMBER}.jar $projectname'-'${BUILD_NUMBER}+'.jar' 
                    
                     
                     '''
