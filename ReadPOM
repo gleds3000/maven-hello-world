@@ -1,4 +1,6 @@
 #!groovy
+import hudson.FilePath
+
 
 pipeline {
     agent { label 'linux_01' }
@@ -19,33 +21,22 @@ pipeline {
             post {
                 success {
                     stash name: 'artifact', includes: 'my-app/target/my-app*.jar'
-                }
+                                    }
             }
         }     
-        
+        def pom = readMavenPom file: 'my-app/pom.xml'
+                    def ver=pom.version
+                    def artifactId=pom.artifactId
+                    def pack=pom.packaging
+                     // def groupId=pom.groupId
+                    print pack
+                    print ver
+                      // print groupid
+                    print artifactId
+
         stage('ler POM'){
           steps{
-          echo 'lendo o pom'
-            script {
-              def pom = readMavenPom file: 'my-app/pom.xml'
-              def ver=pom.version
-              def artifactId=pom.artifactId
-                def pack=pom.packaging
-             // def groupId=pom.groupId
-              print pack
-                print ver
-              // print groupid
-              print artifactId
-                pomFile = readFile('my-app/pom.xml')
-                
- def pomv = new XmlParser().parseText(pomFile)
- def gavMap = [:]
- gavMap['groupId'] =  pomv['groupId'].text().trim()
- gavMap['artifactId'] =  pomv['artifactId'].text().trim()
- gavMap['version'] =  pomv['version'].text().trim()
-                
-                
-            }
+              echo 'lendo o pom'
           }
         }
      
