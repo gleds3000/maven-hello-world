@@ -70,18 +70,21 @@ pipeline {
                 
                     echo "Inicio da subida para o nexus"
                     //  Upload no Nexus 
-                    nexusArtifactUploader artifacts: [
-                    [artifactId: pom.version, classifier: '', file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar', type: 'jar']
-                    ], 
-                    credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
-                    groupId: 'com.mycompany.app', 
-                    nexusUrl: '192.168.56.111:8081', 
-                    nexusVersion: 'nexus3', 
-                    protocol: 'http', 
-                    repository: 'piloto/', 
+                    nexusArtifactUploader (
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        nexusUrl: '192.168.56.111:8081', 
+                        groupId: 'com.mycompany.app', 
                         **version:"${pom.version}",** 
-                    
+                        repository: 'piloto', 
+                        credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
+                        artifacts: [
+                            [artifactId: pom.version,
+                             file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar',
+                             type: 'jar']
+                    ] 
                     //  fim do upload
+                   )     
                 }
             }
         }
