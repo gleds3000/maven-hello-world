@@ -28,14 +28,22 @@ pipeline {
           echo 'lendo o pom'
             script {
               def pom = readMavenPom file: 'my-app/pom.xml'
-              def version=pom.version
+              def ver=pom.version
               def artifactId=pom.artifactId
                 def pack=pom.packaging
              // def groupId=pom.groupId
               print pack
-                print version
+                print ver
               // print groupid
-              print artifactId  
+              print artifactId
+                pomFile = readFile(pomName)
+ def pom = new XmlParser().parseText(pomFile)
+ def gavMap = [:]
+ gavMap['groupId'] =  pom['groupId'].text().trim()
+ gavMap['artifactId'] =  pom['artifactId'].text().trim()
+ gavMap['version'] =  pom['version'].text().trim()
+                
+                
             }
           }
         }
