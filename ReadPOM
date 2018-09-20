@@ -24,7 +24,9 @@ pipeline {
                                     }
             }
         }     
-        def pom = readMavenPom file: 'my-app/pom.xml'
+       
+        stage('ler POM'){
+             def pom = readMavenPom file: 'my-app/pom.xml'
                     def ver=pom.version
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
@@ -34,9 +36,9 @@ pipeline {
                       // print groupid
                     print artifactId
 
-        stage('ler POM'){
-          steps{
+            steps{
               echo 'lendo o pom'
+              
           }
         }
      
