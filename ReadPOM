@@ -54,7 +54,7 @@ pipeline {
                     # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
                     #find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/jarfiles/ \\;
                     find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
-                     mv *shaded*'-'${BUILD_NUMBER}.jar $projectname'-'${BUILD_NUMBER}+'.jar' 
+                     mv *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}'.jar' 
                    
                     
                     '''
