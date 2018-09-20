@@ -14,7 +14,7 @@ pipeline {
                  sh '''
                     ls
                     cd my-app
-                    #mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
+                    mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
                 ''' 
             }
@@ -52,7 +52,7 @@ pipeline {
                     
                     #### separa os pacotes na jarfiles ##
                     # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
-                    find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
+                    find /var/jenkins/workspace/'''${JOB_NAME}'''/$projectname/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
                     
                     '''
                     script{
@@ -60,26 +60,25 @@ pipeline {
                     def ver=pom.version
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
-                    //def groupId=pom.groupId
+                    def groupid=pom.groupId
                     
                     print pack
                     print ver
-                      // print groupid
                     print artifactId
-                    print pom
-                
+                    print groupid
                     echo "Inicio da subida para o nexus"
                     //  Upload no Nexus 
                     nexusArtifactUploader (
                         nexusVersion: 'nexus3', 
                         protocol: 'http', 
                         nexusUrl: '192.168.56.111:8081', 
-                        groupId: 'com.mycompany.app', 
+                        groupId:"${pom.groupId}", 
                         version:"${pom.version}", 
                         repository: 'piloto/', 
                         credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
-                        artifacts: [
+                        artifacts:[
                             [artifactId: pom.artifactId,
+                             classifier: 'Debug',
                              file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar',
                              type: 'jar']
                     ] 
