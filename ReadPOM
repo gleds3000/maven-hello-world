@@ -34,11 +34,13 @@ pipeline {
                     def ver=pom.version
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
-                     // def groupId=pom.groupId
+                    //def groupId=pom.groupId
+                    
                     print pack
                     print ver
                       // print groupid
                     print artifactId
+                    print pom
                 }
           }
         }
