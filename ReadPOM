@@ -29,19 +29,7 @@ pipeline {
              
             steps{
               echo 'lendo o pom'
-                script{
-                    def pom = readMavenPom file: 'my-app/pom.xml'
-                    def ver=pom.version
-                    def artifactId=pom.artifactId
-                    def pack=pom.packaging
-                    //def groupId=pom.groupId
-                    
-                    print pack
-                    print ver
-                      // print groupid
-                    print artifactId
-                    print pom
-                }
+                
           }
         }
           stage('Nexus') {
@@ -67,11 +55,23 @@ pipeline {
                     find /var/jenkins/workspace/CSF/my-app/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/CSF/jarfiles/ \\;
                     
                     '''
-              
+                    script{
+                    def pom = readMavenPom file: 'my-app/pom.xml'
+                    def ver=pom.version
+                    def artifactId=pom.artifactId
+                    def pack=pom.packaging
+                    //def groupId=pom.groupId
+                    
+                    print pack
+                    print ver
+                      // print groupid
+                    print artifactId
+                    print pom
+                
                     echo "Inicio da subida para o nexus"
                     //  Upload no Nexus 
                     nexusArtifactUploader artifacts: [
-                    [artifactId: 'my-app', classifier: '', file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar', type: 'jar']
+                    [artifactId: pom.version, classifier: '', file: '/var/jenkins/workspace/CSF/jarfiles/my-app-61.jar', type: 'jar']
                     ], 
                     credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
                     groupId: 'com.mycompany.app', 
@@ -79,10 +79,10 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'piloto/', 
-                        version:'''${ver}''' 
+                        **version:"${pom.version}",** 
                     
                     //  fim do upload
-                
+                }
             }
         }
         stage('Deploy') {
