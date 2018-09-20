@@ -50,9 +50,6 @@ pipeline {
                 sh '''
                     #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
-                    ###leitura do POM ####
-                   
-                    #### fim da leitura do pom ####
                     pwd
                     ls
                     cd $projectname
@@ -82,7 +79,7 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'piloto/', 
-                        version:"${ver}" 
+                        version:'''${ver}''' 
                     
                     //  fim do upload
                 
