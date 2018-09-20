@@ -30,8 +30,10 @@ pipeline {
               def pom = readMavenPom file: 'my-app/pom.xml'
               def version=pom.version
               def artifactId=pom.artifactId
+                def pack=pom.packaging
              // def groupId=pom.groupId
-              print version
+              print pack
+                print version
               // print groupid
               print artifactId  
             }
