@@ -1,9 +1,18 @@
-# A simple, minimal Maven example: hello world
-
-To create the files in this git repo we've already run `mvn archetype:generate` from http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+# Nome do projeto 
+     my-app
+# Descrição resumida
+    Utilidade para validação de ambiente e desenvolvimento de pipelines com maven
+# Descrição detalhada
+   
+     **Simples e o minimo do Maven, um exemplo para Hello World **
+**_Fonte:_**
+    https://github.com/pdurbin/maven-hello-world    
+    To create the files in this git repo we've already run `mvn archetype:generate` from http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
 
     mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 
+
+# Instruções para instalação
 Now, to print "Hello World!", type either...
 
     cd my-app
@@ -16,24 +25,32 @@ or...
     mvn package
     java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
 
+
+# Instruções de utilização
+
+
 Running `mvn clean` will get us back to only the source Java and the `pom.xml`:
 
-    murphy:my-app pdurbin$ mvn clean --quiet
-    murphy:my-app pdurbin$ ack -a -f
+    $ mvn clean --quiet
+    $ ack -a -f
+    
+    Saida:
+    
     pom.xml
     src/main/java/com/mycompany/app/App.java
     src/test/java/com/mycompany/app/AppTest.java
 
 Running `mvn compile` produces a class file:
 
-    murphy:my-app pdurbin$ mvn compile --quiet
-    murphy:my-app pdurbin$ ack -a -f
+    $ mvn compile --quiet
+    $ ack -a -f
+    
     pom.xml
     src/main/java/com/mycompany/app/App.java
     src/test/java/com/mycompany/app/AppTest.java
     target/classes/com/mycompany/app/App.class
-    murphy:my-app pdurbin$ 
-    murphy:my-app pdurbin$ java -cp target/classes com.mycompany.app.App
+    $ 
+    $ java -cp target/classes com.mycompany.app.App
     Hello World!
 
 Running `mvn package` does a compile and creates the target directory, including a jar:
@@ -57,3 +74,15 @@ Running `mvn package` does a compile and creates the target directory, including
 Running `mvn clean compile exec:java` requires http://mojo.codehaus.org/exec-maven-plugin/
 
 Running `java -jar target/my-app-1.0-SNAPSHOT.jar` requires http://maven.apache.org/plugins/maven-shade-plugin/
+
+# Configurações do ambiente de desenvolvimento
+    Em construção ...
+    
+    Docker:
+        dockerfile 
+        
+    
+# Autor
+    FORK - ajustes/Adapatações realizados por Gledson. 
+# Licença
+    MIT
