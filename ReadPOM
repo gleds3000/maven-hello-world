@@ -56,7 +56,7 @@ pipeline {
                     find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
                     find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
                    
-                    
+                    pwd
                     '''
                     script{
                     def pom = readMavenPom file: 'my-app/pom.xml'
@@ -86,7 +86,7 @@ pipeline {
                              file: '/var/jenkins/workspace/Anewnexus/my-app/jarfiles/my-app'+pom.version+'.jar',
                              type: 'jar']
                     ] 
-                        pwd
+                     
                     //  fim do upload
                    )     
                 }
