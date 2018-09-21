@@ -83,7 +83,7 @@ pipeline {
                             [artifactId: pom.artifactId,
                              classifier: '',
                              
-                             file: '/var/jenkins/workspace/Anewnexus/my-app/jarfiles/my-app'+pom.version+'.jar',
+                             file: pom.name+'-'+pom.version+'.jar',
                              type: 'jar']
                     ] 
                      
