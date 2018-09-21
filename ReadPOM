@@ -82,7 +82,8 @@ pipeline {
                         artifacts:[
                             [artifactId: pom.artifactId,
                              classifier: '',
-                             file: '/var/jenkins/workspace/+"${JOB_NAME}/$projectname"/jarfiles/'+ pom.name +'-'+ pom.version + '.jar',
+                             
+                             file: '/var/jenkins/workspace/Anewnexus/my-app/jarfiles/my-app'+pom.version+'.jar',
                              type: 'jar']
                     ] 
                     //  fim do upload
