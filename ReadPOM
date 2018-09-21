@@ -86,6 +86,7 @@ pipeline {
                              file: '/var/jenkins/workspace/Anewnexus/my-app/jarfiles/my-app'+pom.version+'.jar',
                              type: 'jar']
                     ] 
+                        script {'sh pwd'}
                     //  fim do upload
                    )     
                 }
