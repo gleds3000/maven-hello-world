@@ -82,8 +82,7 @@ pipeline {
                         artifacts:[
                             [artifactId: pom.artifactId,
                              classifier: '',
-                             
-                             file: pom.name+'-'+pom.version+'.jar',
+                             file: '/var/jenkins/workspace/CSF/jarfiles/my-app-69.jar',
                              type: 'jar']
                     ] 
                      
