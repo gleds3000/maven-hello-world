@@ -11,8 +11,8 @@ pipeline {
                 echo 'Construindo..'
                 //deleteDir()
                // script {'sh java -version'}
-                 sh '''
-                    ls
+                 bat '''
+                    dir
                     cd my-app
                     mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
@@ -35,13 +35,11 @@ pipeline {
           stage('Nexus') {
             steps {
                 echo 'Versionando e guardando....'
-                sh '''
+                bat '''
                     #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
-                    pwd
-                    ls
                     cd $projectname
-                    if [ ! -d jarfiles ] 
+                    if exists jarfiles  
                     then
                         mkdir jarfiles
                         cd jarfiles
@@ -51,12 +49,11 @@ pipeline {
                     echo date
                     
                     #### separa os pacotes na jarfiles ##
-                    # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
-                    #find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/jarfiles/ \\;
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
-                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
+                    
+                    ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
+                    ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
                    
-                    pwd
+                    where /r D:\jenkins *.jar >> filelist.txt
                     '''
                     script{
                     def pom = readMavenPom file: 'my-app/pom.xml'
