@@ -39,11 +39,12 @@ pipeline {
                     #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     cd $projectname
-                    if exists jarfiles  
+                    if exist jarfiles  
                     then
-                        mkdir jarfiles
+                        
                         cd jarfiles
                     else 
+                        mkdir jarfiles
                         cd jarfiles
                     fi
                     echo date
