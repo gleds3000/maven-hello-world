@@ -29,14 +29,14 @@ pipeline {
             steps {
                 echo 'Versionando e guardando....'
                 bat '''
-                    projectname="my-app"
-                    cd $projectname
-                    if exist jarfiles  {
+                    set projectname="my-app"
+                    echo %projectname%
+                    if not exist jarfiles  {
                         cd jarfiles
                     }
                     else 
                         mkdir jarfiles
-                        cd jarfiles
+                        dir jarfiles
                     fi
                     echo date
                     
