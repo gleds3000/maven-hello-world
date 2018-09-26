@@ -29,18 +29,7 @@ pipeline {
             steps {
                 echo 'Versionando e guardando....'
                 bat '''
-                    set projectname="my-app"
-                    echo %projectname%
-                    if not exist jarfiles  {
-                        cd jarfiles
-                    }
-                    else 
-                        mkdir jarfiles
-                        dir jarfiles
-                    fi
-                    echo date
-                    
-                    where /r E:\\Ambiente\\Jenkins\\workspace\\$projectname *.jar >> filelist.txt
+                    where /r E:\\Ambiente\\Jenkins\\workspace\\%projectname *.jar >> filelist.txt
                     dir filelist.txt
                     '''
               script{
@@ -49,7 +38,7 @@ pipeline {
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
                     def groupid=pom.groupId
-                   
+                    bat 'where /r E:\\Ambiente\\Jenkins\\workspace\\'+pom.name+'*.jar >> filelist.txt'
                     print pack
                     print ver
                     print artifactId
