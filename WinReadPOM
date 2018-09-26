@@ -9,11 +9,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Construindo..'
-                //deleteDir()
-               // script {'sh java -version'}
                  bat '''
                     cd my-app
-                    mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
+                    mvn -B versions:set -DnewVersion=env.BUILD_NUMBER
                     mvn -B -Dmaven.test.skip=true clean package
                 ''' 
             }
