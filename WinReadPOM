@@ -25,7 +25,64 @@ pipeline {
             }
         }     
        
-       
+        stage('Nexus') {
+            steps {
+                echo 'Versionando e guardando....'
+                bat '''
+                    #TIME=date  #`date +%d%m%Y_%H%M`
+                    projectname="my-app"
+                    cd $projectname
+                    if exist jarfiles  
+                    then
+                        
+                        cd jarfiles
+                    else 
+                        mkdir jarfiles
+                        cd jarfiles
+                    fi
+                    echo date
+                    
+                    #### separa os pacotes na jarfiles ##
+                    
+                    ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
+                    ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
+                   
+                    where /r E:\\Ambiente\\Jenkins\\workspace\\$projectname *.jar >> filelist.txt
+                    dir filelist.txt
+                    '''
+                    script{
+                    def pom = readMavenPom file: 'my-app/pom.xml'
+                    def ver=pom.version
+                    def artifactId=pom.artifactId
+                    def pack=pom.packaging
+                    def groupid=pom.groupId
+                   
+                    print pack
+                    print ver
+                    print artifactId
+                    print groupid
+                    echo "Inicio da subida para o nexus"
+                    //  Upload no Nexus 
+                    nexusArtifactUploader (
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        nexusUrl: '192.168.56.111:8081', 
+                        groupId:"${pom.groupId}", 
+                        version:"${pom.version}", 
+                        repository: 'piloto/', 
+                        credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
+                        artifacts:[
+                            [artifactId: pom.artifactId,
+                             classifier: '',
+                             file: '/var/jenkins/workspace/${JOB_NAME}/'+pom.name+'/jarfiles/'+pom.name+'-'+pom.version+'.jar',
+                             type: 'jar']
+                    ] 
+                     
+                    //  fim do upload
+                   )     
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
