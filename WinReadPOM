@@ -36,7 +36,7 @@ pipeline {
                     def pack=pom.packaging
                     def groupid=pom.groupId
                     bat 'where /r E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target '+pom.name+'*.jar > filelist.txt'
-                    bat 'ren E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target '+pom.name+'*.jar 'pom.name+'-'+env.BUILD_NUMBER+'.jar'
+                    bat 'ren E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target '+pom.name+'*.jar '+pom.name+'-'+env.BUILD_NUMBER+'.jar'
                     print pack
                     print ver
                     print artifactId
