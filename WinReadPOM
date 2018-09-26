@@ -36,7 +36,7 @@ pipeline {
                     bat 'where /r E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target '+pom.name+'*.jar > filelist.txt'
                     def serv = readFile "${env.WORKSPACE}"
                     print serv
-                    bat 'ren E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target '+pom.name+'SNAPSHOT.jar '+pom.name+'-'+env.BUILD_NUMBER+'.jar'
+                    bat 'ren E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target '+pom.name+'${env.BUILD_ID}.jar '+pom.name+'-'+${env.BUILD_ID}+'.jar'
                     print pack
                     print ver
                     print artifactId
