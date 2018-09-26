@@ -51,7 +51,7 @@ pipeline {
                         credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
                         artifacts:[
                             [artifactId: pom.artifactId,
-                             classifier: '',
+                             classifier: 'RELEASE',
                              file: 'E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target\\'+pom.name+'-'+pom.version+'.jar',
                              type: 'jar']
                     ] 
