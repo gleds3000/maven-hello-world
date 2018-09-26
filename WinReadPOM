@@ -52,7 +52,7 @@ pipeline {
                         artifacts:[
                             [artifactId: pom.artifactId,
                              classifier: '',
-                             file: '**\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target\\'+pom.name+'-'+pom.version+'.jar',
+                             file: 'E:\\Ambiente\\Jenkins\\workspace\\'+env.JOB_NAME+'\\'+pom.name+'\\target\\'+pom.name+'-'+pom.version+'.jar',
                              type: 'jar']
                     ] 
                      
