@@ -54,7 +54,7 @@ pipeline {
                     ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
                     ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
                    
-                    where /r D:\jenkins *.jar >> filelist.txt
+                    where /r D:\Jenkins *.jar >> filelist.txt
                     '''
                     script{
                     def pom = readMavenPom file: 'my-app/pom.xml'
