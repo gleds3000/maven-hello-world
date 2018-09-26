@@ -29,29 +29,22 @@ pipeline {
             steps {
                 echo 'Versionando e guardando....'
                 bat '''
-                    #TIME=date  #`date +%d%m%Y_%H%M`
                     projectname="my-app"
                     cd $projectname
-                    if exist jarfiles  
-                    then
-                        
+                    if exist jarfiles  {
                         cd jarfiles
+                    }
                     else 
                         mkdir jarfiles
                         cd jarfiles
                     fi
                     echo date
                     
-                    #### separa os pacotes na jarfiles ##
-                    
-                    ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
-                    ##find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
-                   
                     where /r E:\\Ambiente\\Jenkins\\workspace\\$projectname *.jar >> filelist.txt
                     dir filelist.txt
                     '''
-                    script{
-                    def pom = readMavenPom file: 'my-app/pom.xml'
+              script{
+                    def pom = readMavenPom file: 'my-app\pom.xml'
                     def ver=pom.version
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
@@ -74,7 +67,7 @@ pipeline {
                         artifacts:[
                             [artifactId: pom.artifactId,
                              classifier: '',
-                             file: '/var/jenkins/workspace/${JOB_NAME}/'+pom.name+'/jarfiles/'+pom.name+'-'+pom.version+'.jar',
+                             file: '/var/Jenkins/workspace/${JOB_NAME}/'+pom.name+'/jarfiles/'+pom.name+'-'+pom.version+'.jar',
                              type: 'jar']
                     ] 
                      
