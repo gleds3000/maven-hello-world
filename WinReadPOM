@@ -12,7 +12,6 @@ pipeline {
                 //deleteDir()
                // script {'sh java -version'}
                  bat '''
-                    dir
                     cd my-app
                     mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
                     mvn -B -Dmaven.test.skip=true clean package
@@ -21,7 +20,7 @@ pipeline {
             post {
                 success {
                     stash name: 'artifact', includes: 'my-app/target/my-app*.jar'
-                                    }
+                }
             }
         }     
        
@@ -35,7 +34,7 @@ pipeline {
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
                     def groupid=pom.groupId
-                    bat 'where /r E:\\Ambiente\\Jenkins\\workspace\\'+pom.name+'*.jar > filelist.txt'
+                    bat 'where /r E:\\Ambiente\\Jenkins\\workspace\\'+pom.name+'\\target\\'+pom.name+'*.jar > filelist.txt'
                     print pack
                     print ver
                     print artifactId
