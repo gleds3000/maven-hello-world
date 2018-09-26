@@ -44,7 +44,7 @@ pipeline {
                     dir filelist.txt
                     '''
               script{
-                    def pom = readMavenPom file: 'my-app\pom.xml'
+                    def pom = readMavenPom file: 'my-app\\pom.xml'
                     def ver=pom.version
                     def artifactId=pom.artifactId
                     def pack=pom.packaging
