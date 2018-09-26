@@ -11,7 +11,7 @@ pipeline {
                 echo 'Construindo..'
                  bat '''
                     cd my-app
-                    mvn -B versions:set -DnewVersion=env.BUILD_NUMBER
+                    mvn -B versions:set -DnewVersion=${env.BUILD_ID} 
                     mvn -B -Dmaven.test.skip=true clean package
                 ''' 
             }
