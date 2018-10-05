@@ -1,0 +1,102 @@
+#!groovy
+import hudson.FilePath
+
+
+pipeline {
+    agent { label 'linux_01' }
+      
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Construindo..'
+                //deleteDir()
+               // script {'sh java -version'}
+                 sh '''
+                    ls
+                    cd my-app
+                    mvn -B versions:set -DnewVersion=${BUILD_NUMBER}
+                    mvn -B -Dmaven.test.skip=true clean package
+                ''' 
+            }
+            post {
+                success {
+                    stash name: 'artifact', includes: 'my-app/target/my-app*.jar'
+                                    }
+            }
+        }     
+       
+        stage('ler POM'){
+             
+            steps{
+              echo 'lendo o pom'
+                
+          }
+        }
+          stage('Nexus') {
+            steps {
+                echo 'Versionando e guardando....'
+                sh '''
+                    #TIME=date  #`date +%d%m%Y_%H%M`
+                    projectname="my-app"
+                    pwd
+                    ls
+                    cd $projectname
+                    if [ ! -d jarfiles ] 
+                    then
+                        mkdir jarfiles
+                        cd jarfiles
+                    else 
+                        cd jarfiles
+                    fi
+                    echo date
+                    
+                    #### separa os pacotes na jarfiles ##
+                    # find /var/jenkins/workspace/${JOB_NAME}/$projectname -name "*my*.jar" -not -path "./jarfiles/*" -exec cp jarfiles/;
+                    #find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*my*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/jarfiles/ \\;
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*.jar" -not -path "./jarfiles/*" -exec cp {} /var/jenkins/workspace/${JOB_NAME}/$projectname/jarfiles/ \\;
+                    find /var/jenkins/workspace/${JOB_NAME}/$projectname/ -name "*shaded.jar" -not -path "./jarfiles/*" -exec mv {} *${BUILD_NUMBER}-shaded.jar $projectname-${BUILD_NUMBER}.jar \\; 
+                   
+                    pwd
+                    '''
+                    script{
+                    def pom = readMavenPom file: 'my-app/pom.xml'
+                    def ver=pom.version
+                    def artifactId=pom.artifactId
+                    def pack=pom.packaging
+                    def groupid=pom.groupId
+                   
+                    print pack
+                    print ver
+                    print artifactId
+                    print groupid
+                    echo "Inicio da subida para o nexus"
+                    //  Upload no Nexus 
+                    nexusArtifactUploader (
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        nexusUrl: '192.168.56.111:8081', 
+                        groupId:"${pom.groupId}", 
+                        version:"${pom.version}", 
+                        repository: 'piloto/', 
+                        credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
+                        artifacts:[
+                            [artifactId: pom.artifactId,
+                             classifier: '',
+                             file: '/var/jenkins/workspace/${JOB_NAME}/'+pom.name+'/jarfiles/'+pom.name+'-'+pom.version+'.jar',
+                             type: 'jar']
+                    ] 
+                     
+                    //  fim do upload
+                   )     
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Implantando no Ambiente @ParamAmbiente DEV CERT HOM....'
+                cleanWs()
+
+            }
+        }
+    }
+}
