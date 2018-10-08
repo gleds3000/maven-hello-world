@@ -77,7 +77,8 @@ pipeline {
                         nexusUrl: '192.168.56.111:8081', 
                         groupId:"${pom.groupId}", 
                         version:"${pom.version}", 
-                        repository: 'piloto/', 
+                        //repository: 'piloto/', 
+                        repository: 'maven-releases/',
                         credentialsId: '6fbf0166-da65-4a02-ba61-d30074b616f2', 
                         artifacts:[
                             [artifactId: pom.artifactId,
