@@ -7,6 +7,12 @@
   <version>1.1-SNAPSHOT</version>
   <name>my-app</name>
   <url>http://maven.apache.org</url>
+	<repositories>
+    		<repository>
+      			<id>central</id>
+      			<url>http://192.168.56.111:8081/#browse/browse:maven-central</url>
+    		</repository>
+  	</repositories>	
 
   <properties>
       <!-- This property will be set by the Maven Dependency plugin -->
